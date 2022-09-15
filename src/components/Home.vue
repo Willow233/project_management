@@ -7,29 +7,41 @@
             <span>电商管理后台系统</span>
         </div>
         <div>
-            <span>晚上好，用户名</span>
+            <span>晚上好，{{username}}</span>
             <button @click="logout">退出登录</button>
         </div>
     </el-header>
     <!-- 页面主体区域 -->
     <el-container>
       <!-- 侧边栏 -->
-      <el-aside width="200px">
+      <el-aside :width="isCollapse? '64px' : '200px'">
+        <div class="toggle-button" @click="toggleCollapse">
+          <i class="iconfont icon-home"></i>
+        </div>
+        <!-- 侧边菜单栏 -->
         <el-menu
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b">
+      background-color="#f3e48f"
+      text-color="#909490"
+      active-text-color="#F76E1E"
+      unique-opened
+      :collapse="isCollapse"
+      :collapse-transition="false"
+      router
+      :default-active="activePath">
       <!-- 一级菜单 -->
-      <el-submenu index="1" v-for="item in menulist" :key=item.id>
+      <!-- index只接收字符串 -->
+      <el-submenu :index="item.id + ''" v-for="item in menulist" :key="item.id">
         <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>导航一</span>
+          <i :class="iconObj[item.id]"></i>
+          <span>{{item.authName}}</span>
         </template>
         <!-- 二级菜单 -->
-        <el-menu-item index="1-4-1">
+        <el-menu-item :index=" '/' + subItem.path" v-for="subItem in item.children" :key="subItem.id"
+        @click="saveNavState('/' + subItem.path)">
+       
             <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>选项1</span>
+          <i class="iconfont icon-all"></i>
+          <span>{{subItem.authName}}</span>
         </template>
         </el-menu-item>
       </el-submenu>
@@ -37,7 +49,9 @@
     </el-menu>
       </el-aside>
       <!-- 展示页 -->
-      <el-main>Main</el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
     <!-- / -->
   </el-container>
@@ -47,25 +61,49 @@
 export default {
     data(){
         return{
+        // 用户名
+        username:'',
             // 左侧菜单数据
         menulist:[],
-        }
-        
-    
-    },
+        // 图标列表
+        iconObj:{
+          '101':'iconfont icon-Customermanagement',
+          '102':'iconfont icon-product',
+          '103':'iconfont icon-packaging',
+          '104':'iconfont icon-manage-order',
+          '105':'iconfont icon-topsales'
+        },
+        isCollapse:false,
+        // 被激活的地址
+        activePath:''
+        }},
     created(){
+      // this.getUsername()
         this.getMenuList()
+        this.activePath = window.sessionStorage.getItem('activePath')
     },
     methods:{
         logout(){
             // window.sessionStorage.clear()
             this.$router.push('./login')
         },
+        // getUsername(){
+
+        // },
         async getMenuList(){
           const {data:res} = await this.$http.get('/user/menu')
             if(res.meta.status !== 200) return this.$message.error(res.meta.msg)
           this.menulist = res.data
           console.log(res.data);
+        },
+        // 切换菜单展示
+        toggleCollapse(){
+          this.isCollapse = !this.isCollapse
+        },
+        // 保存链接的激活状态
+        saveNavState(activePath){
+          window.sessionStorage.setItem('activePath',activePath)
+          this.activePath = activePath
         }
     }
 };
@@ -76,7 +114,9 @@ export default {
   height: 100%;
 }
 .el-header {
-  background-color: #333;
+  background-color: #FAD961;
+background-image: linear-gradient(247deg, #FAD961 0%, #F76B1C 100%);
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -93,9 +133,44 @@ export default {
   }
 }
 .el-aside {
-  background-color:#545C64;
+  background-color:#f3e48f;
+  .el-menu{
+    border-right: none;
+    .el-submenu__title{
+      
+      .iconfont{
+        font-size: 20px;
+        color: rgb(30, 19, 7);
+        margin-right: 5px;
+      }
+      >span{
+        color: rgb(30, 19, 7);
+        font-weight: bold;
+      }
+    }
+
+    .el-menu-item{
+      color: rgb(30, 19, 7);
+      .iconfont{
+        font-size: 20px;
+        margin-right: 5px;
+      }
+    }
+  }
 }
 .el-main {
   background-color: #f5f5f7;
+}
+
+.toggle-button{
+  background-color: rgb(23, 17, 11);
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+  .iconfont{
+        font-size: 20px;
+        color: #f3e48f; 
+      }
 }
 </style>
