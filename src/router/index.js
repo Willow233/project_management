@@ -8,23 +8,25 @@ import Users from '@/views/users/Users'
 Vue.use(VueRouter)
 
 // 因为要挂载路由守卫 因此不能直接export default
-const router =  new VueRouter({
-  routes:[
-    { path:'/', redirect:'/login' },
-    { path:'/login', component:Login },
-    { path:'/home',component:Home,
-    redirect:'/welcome',
-    children:[
-      {path:'/welcome',component:Welcome},
-      {path:'/users',component:Users}
-    ]}
+const router = new VueRouter({
+  routes: [
+    { path: '/', redirect: '/login' },
+    { path: '/login', component: Login },
+    {
+      path: '/home', component: Home,
+      redirect: '/welcome',
+      children: [
+        { path: '/welcome', component: Welcome },
+        { path: '/users', component: Users }
+      ]
+    }
   ]
 })
 
-router.beforeEach((to,from,next)=>{
-  if(to.path === '/login') return next()
-  // const tokenStr = window.sessionStorage.getItem('token')
-  // if (!tokenStr) return next('/login')
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') return next()
+  const tokenStr = window.sessionStorage.getItem('token')
+  if (!tokenStr) return next('/login')
   next()
 
 })
