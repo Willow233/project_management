@@ -12,7 +12,7 @@ Vue.use(VueRouter)
 // 因为要挂载路由守卫 因此不能直接export default
 const router = new VueRouter({
   routes: [
-    { path: '/', redirect: '/loginapp' },
+    { path: '/', redirect: '/loginapp/login' },
     {
       path: '/loginapp',
       component: LoginApp,
