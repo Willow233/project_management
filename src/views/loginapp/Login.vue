@@ -1,15 +1,11 @@
 <template>
-  <div class="login_container">
-    <div class="login_box">
-      <!-- 标题 -->
-      <h1>登录后台管理系统</h1>
-      <!-- 登录表单区域 -->
+   <!-- 登录表单区域 -->
       <el-form
         ref="loginFormRef"
         :model="loginForm"
         label-width="0px"
         :rules="loginFormRules"
-        class="login_form"
+        
       >
         <!-- 用户名 -->
         <el-form-item prop="username">
@@ -33,14 +29,13 @@
           <el-button class="btn">注册</el-button>
         </el-form-item>
       </el-form>
-    </div>
-  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
+      activeIndex:'1',
       // 登陆表单数据绑定对象
       loginForm: {
         username: '',
@@ -97,39 +92,6 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
-.login_container {
-  background-color: #00dbde;
-  background-image: linear-gradient(90deg, #00dbde 0%, #fc00ff 100%);
-  height: 100%;
+<style>
 
-  .login_box {
-    width: 450px;
-    height: 600px;
-    background-color: #fff;
-    border-radius: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    h1 {
-      font-size: 20px;
-      margin-top: 30px;
-      color: #66b1ff;
-      font-weight: bold;
-    }
-    .login_form {
-      position: absolute;
-      top: 50px;
-      width: 100%;
-      padding: 30px;
-      box-sizing: border-box;
-      .btn {
-        width: 100%;
-        margin: 10px 0 0 0;
-      }
-    }
-  }
-}
 </style>

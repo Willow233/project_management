@@ -7,7 +7,7 @@ import { Button,
     Form,FormItem,
     Message,
     Container,Header,Aside,Main,Row,Col,
-    Table,TableColumn,Switch,Tooltip,Pagination
+    Table,TableColumn,Switch,Tooltip,Pagination,Dialog
 } from 'element-ui'
 
 
@@ -34,5 +34,6 @@ Vue.use(TableColumn)
 Vue.use(Switch)
 Vue.use(Tooltip)
 Vue.use(Pagination)
+Vue.use(Dialog)
 
 Vue.prototype.$message = Message
