@@ -8,7 +8,8 @@
       </div>
       <div>
         <span>晚上好，{{ username }}</span>
-        <button @click="logout">退出登录</button>
+         <!-- <el-button>我的</el-button> -->
+        <el-button type="danger" @click="logout">退出</el-button>
       </div>
     </el-header>
     <!-- 页面主体区域 -->
@@ -18,7 +19,7 @@
         <div class="toggle-button" @click="toggleCollapse">
           <i class="iconfont icon-category"></i>
         </div>
-        
+
         <!-- 侧边菜单栏 -->
         <el-menu
           background-color="#f3e48f"
@@ -30,17 +31,16 @@
           router
           :default-active="activePath"
         >
-        <!-- 首页 -->
-         <el-menu-item index="/home">
-        <template slot="title">
-          <i class="iconfont icon-home"></i>
-          <span>首页</span>
-        </template>
-       
-         </el-menu-item>
+          <!-- 首页 -->
+          <el-menu-item index="/home">
+            <template slot="title">
+              <i class="iconfont icon-home"></i>
+              <span>首页</span>
+            </template>
+          </el-menu-item>
           <!-- 一级菜单 -->
           <!-- index只接收字符串 -->
-          
+
           <el-submenu
             :index="item.id + ''"
             v-for="item in menulist"
@@ -103,17 +103,18 @@ export default {
   methods: {
     logout() {
       window.sessionStorage.clear()
-      this.$router.push('./login')
+      this.$router.push('./loginapp/login')
     },
-    async getUsername(){
+    async getUsername() {
       const { data: res } = await this.$http.get('/my/userinfo')
       if (res.status !== 200) return this.$message.error('获取用户信息失败')
-      console.log(res);
+      console.log(res)
       this.username = res.data.username
     },
     async getMenuList() {
       const { data: res } = await this.$http.get('/my/menu')
-      if (res.meta.status !== 200) return this.$message.error('获取列表信息失败')
+      if (res.meta.status !== 200)
+        return this.$message.error('获取列表信息失败')
       this.menulist = res.data
       console.log(res.data)
     },
@@ -141,7 +142,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #f5f5f7;
+  color: #ffffff;
   > div {
     display: flex;
     align-items: center;

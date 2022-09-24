@@ -10,7 +10,7 @@
      <!-- 卡片视图区域 -->
     <el-card class="box-card">
      <!-- 表格区域 -->
-     <el-table :data="rightsList" border stripe>
+     <el-table :data="rightList" border stripe>
         <el-table-column type="index"> </el-table-column>
         <el-table-column label="权限名称" prop="username"> </el-table-column>
         <el-table-column label="路径" prop="username"> </el-table-column>
