@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import LoginApp from '@/components/LoginApp'
+import Login from '@/views/loginapp/Login'
+import RegUser from '@/views/loginapp/RegUser'
 import Home from '@/components/Home'
 import Welcome from '@/components/Welcome'
 import Users from '@/views/users/Users'
-import Login from '@/views/loginapp/Login'
-import RegUser from '@/views/loginapp/RegUser'
+import RightList from '@/views/rights/RightList'
+import RoleList from '@/views/rights/RoleList'
 
 Vue.use(VueRouter)
 
@@ -13,21 +15,21 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
     { path: '/', redirect: '/loginapp/login' },
-    {
-      path: '/loginapp',
+    { path: '/loginapp',
       component: LoginApp,
       children: [
         { path: '/loginapp/login', component: Login },
         { path: '/loginapp/reguser', component: RegUser }
       ]
     },
-    {
-      path: '/home',
+    { path: '/home',
       component: Home,
       redirect: '/welcome',
       children: [
         { path: '/welcome', component: Welcome },
-        { path: '/users', component: Users }
+        { path: '/users', component: Users },
+        { path: '/rightlist', component: RightList },
+        { path: '/rolelist', component: RoleList }
       ]
     }
   ]

@@ -16,8 +16,9 @@
       <!-- 侧边栏 -->
       <el-aside :width="isCollapse ? '64px' : '200px'">
         <div class="toggle-button" @click="toggleCollapse">
-          <i class="iconfont icon-home"></i>
+          <i class="iconfont icon-category"></i>
         </div>
+        
         <!-- 侧边菜单栏 -->
         <el-menu
           background-color="#f3e48f"
@@ -29,8 +30,17 @@
           router
           :default-active="activePath"
         >
+        <!-- 首页 -->
+         <el-menu-item index="/home">
+        <template slot="title">
+          <i class="iconfont icon-home"></i>
+          <span>首页</span>
+        </template>
+       
+         </el-menu-item>
           <!-- 一级菜单 -->
           <!-- index只接收字符串 -->
+          
           <el-submenu
             :index="item.id + ''"
             v-for="item in menulist"
