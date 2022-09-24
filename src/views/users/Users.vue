@@ -36,7 +36,7 @@
         <el-table-column label="权限" prop="role_name"> </el-table-column>
         <el-table-column label="邮箱地址" prop="email"> </el-table-column>
         <el-table-column label="电话号码" prop="mobile"> </el-table-column>
-        <el-table-column label="状态">
+        <el-table-column label="状态" width="120px">
           <template slot-scope="scope">
             <!-- 通过 :active-value="1" :inactive-value="0" 这两个属性 解决了switch是布尔值 而sql没有布尔值的问题 -->
             <el-switch
@@ -49,7 +49,7 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="200px;">
+        <el-table-column label="操作" width="260px;">
           <template slot-scope="scope">
             <div>
               <!-- 修改按钮 -->
@@ -58,27 +58,20 @@
                 icon="el-icon-edit"
                 size="mini"
                 @click="showEditDialog(scope.row.id)"
-              ></el-button>
+              >编辑</el-button>
               <!-- 删除按钮 -->
               <el-button
                 type="danger"
                 icon="el-icon-delete"
                 size="mini"
                 @click="removeUserById(scope.row.id)"
-              ></el-button>
+              >删除</el-button>
               <!-- 分配角色按钮 -->
-              <el-tooltip
-                class="item"
-                effect="dark"
-                content="修改用户权限"
-                placement="top"
-                :enterable="false"
-              >
                 <el-button
                   type="warning"
                   icon="el-icon-setting"
                   size="mini"
-                ></el-button>
+                >权限</el-button>
               </el-tooltip>
             </div>
           </template>

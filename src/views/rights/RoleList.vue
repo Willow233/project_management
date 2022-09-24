@@ -33,7 +33,7 @@
                 <el-col :span="5">
                   <el-tag
                   closable
-                        @close="removeRightById(scope.row,item3.id)"
+                        @close="removeRightById(scope.row,item1.id)"
                   >{{ item1.authName }}</el-tag>
                   <i class="el-icon-caret-right"></i>
                 </el-col>
@@ -48,7 +48,7 @@
                     <el-col :span="6">
                       <el-tag 
                       closable
-                        @close="removeRightById(scope.row,item3.id)"
+                        @close="removeRightById(scope.row,item2.id)"
                       type="success">{{ item2.authName }}</el-tag>
                       <i class="el-icon-caret-right"></i>
                     </el-col>
@@ -72,7 +72,7 @@
         <el-table-column type="index"> </el-table-column>
         <el-table-column label="角色名称" prop="roleName"> </el-table-column>
         <el-table-column label="角色描述" prop="roleDesc"> </el-table-column>
-        <el-table-column label="操作" width="200px;">
+        <el-table-column label="操作" width="260px;">
           <template slot-scope="scope">
             <div>
               <!-- 修改按钮 -->
@@ -81,42 +81,57 @@
                 icon="el-icon-edit"
                 size="mini"
                 @click="showEditDialog(scope.row.id)"
-              ></el-button>
+              >编辑</el-button>
               <!-- 删除按钮 -->
               <el-button
                 type="danger"
                 icon="el-icon-delete"
                 size="mini"
                 @click="removeUserById(scope.row.id)"
-              ></el-button>
+              >删除</el-button>
               <!-- 分配角色按钮 -->
-              <el-tooltip
-                class="item"
-                effect="dark"
-                content="修改用户权限"
-                placement="top"
-                :enterable="false"
-              >
                 <el-button
                   type="warning"
                   icon="el-icon-setting"
                   size="mini"
-                ></el-button>
+                  @click="showSetRightDialog"
+                >权限</el-button>
               </el-tooltip>
             </div>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
+
+    <!-- 分配权限的对话框 -->
+    <el-dialog
+  title="分配权限"
+  :visible.sync="setRightDialogVisible"
+  width="50%"
+  :before-close="handleClose">
+  <el-tree :data="rightlist" :props="treeProps"></el-tree>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="setRightDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="setRightDialogVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
 <script>
+import { Message } from "element-ui";
+
 export default {
   data() {
     return {
       // 所有的权限列表
       roleList: [],
+    //   控制权限分配对话框
+      setRightDialogVisible:false,
+      rightlist:[],
+    treeProps:{
+        label:''
+    }
     }
   },
   created() {
@@ -149,6 +164,14 @@ export default {
         role.children = res.data
       }
     },
+    // 根据分配权限的对话框
+    async showSetRightDialog(){
+        // 获取所有权限的数据
+    const {data:res} = await this.$http.get('rights/tree')
+    if(res.status !== 200) return this.$message.error('获取消息失败')
+    this.rolelist = res.data
+        this.setRightDialogVisible = true
+    }
   },
 }
 </script>
