@@ -94,7 +94,7 @@
                   type="warning"
                   icon="el-icon-setting"
                   size="mini"
-                  @click="showSetRightDialog"
+                  @click="showSetRightDialog(scope.row)"
                 >权限</el-button>
               </el-tooltip>
             </div>
@@ -106,32 +106,39 @@
     <!-- 分配权限的对话框 -->
     <el-dialog
   title="分配权限"
-  :visible.sync="setRightDialogVisible"
+  :visible.sync="setRightDialogVisible" @close="setRightDialogClosed"
   width="50%"
-  :before-close="handleClose">
-  <el-tree :data="rightlist" :props="treeProps"></el-tree>
+  >
+  <el-tree :data="rightlist" :props="treeProps" 
+  :default-checked-keys="defKeys" ref="treeRef"
+  show-checkbox node-key="id" default-expand-all></el-tree>
   <span slot="footer" class="dialog-footer">
     <el-button @click="setRightDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="setRightDialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="allotRights">确 定</el-button>
   </span>
 </el-dialog>
   </div>
 </template>
 
 <script>
-import { Message } from "element-ui";
+import { Message } from 'element-ui'
 
 export default {
   data() {
     return {
       // 所有的权限列表
       roleList: [],
-    //   控制权限分配对话框
-      setRightDialogVisible:false,
-      rightlist:[],
-    treeProps:{
-        label:''
-    }
+      //   控制权限分配对话框
+      setRightDialogVisible: false,
+      rightlist: [],
+      treeProps: {
+        label: 'authName',
+        children: 'children',
+      },
+      // 默认选中的节点id值数组
+      defKeys: [],
+      // 当前即将分配权限的角色id
+      roleId: '',
     }
   },
   created() {
@@ -145,7 +152,7 @@ export default {
       this.roleList = res.data
     },
     // 根据id删除对应的权限
-    async removeRightById(role,rightId) {
+    async removeRightById(role, rightId) {
       // 提示框
       const confirmResult = await this.$confirm(
         '此操作将永久删除该权限, 是否继续?',
@@ -158,20 +165,61 @@ export default {
       ).catch((err) => err)
 
       if (confirmResult === 'confirm') {
-        const { data: res } = await this.$http.delete(`roles/${role.id}/rights/${rightId}`)
+        const { data: res } = await this.$http.delete(
+          `roles/${role.id}/rights/${rightId}`
+        )
         if (res.status !== 200) return this.$message.error('删除权限失败')
         this.$message.info('删除成功')
         role.children = res.data
       }
     },
     // 根据分配权限的对话框
-    async showSetRightDialog(){
-        // 获取所有权限的数据
-    const {data:res} = await this.$http.get('rights/tree')
-    if(res.status !== 200) return this.$message.error('获取消息失败')
-    this.rolelist = res.data
-        this.setRightDialogVisible = true
-    }
+    async showSetRightDialog(role) {
+      this.roleId = role.id
+      // 获取所有权限的数据
+      // const {data:res} = await this.$http.get('rights/tree')
+      // if(res.status !== 200) return this.$message.error('获取消息失败')
+      const { data: res } = await this.$http.get('/my/menu')
+      if (res.meta.status !== 200)
+        return this.$message.error('获取列表信息失败')
+      // 存储获取的权限信息
+      this.rightlist = res.data
+      // 获取三级权限id
+      this.getLeafKeys(role, this.defKeys)
+      //  显示提示框
+      this.setRightDialogVisible = true
+    },
+    // 通过递归的形式，获取角色下的所有三级权限id
+    getLeafKeys(node, arr) {
+      if (!node.children) {
+        return arr.push(node.id)
+      }
+      node.children.forEach((item) => this.getLeafKeys(item, arr))
+    },
+    // 监听分配权限对话框的关闭事件
+    setRightDialogClosed() {
+      this.defKeys = []
+    },
+    // 点击为角色分配权限
+    async allotRights() {
+      const keys = [
+        // element ui 内置函数
+        ...this.$refs.treeRef.getCheckedKeys(),
+        ...this.$refs.treeRef.getHaltCheckedKeys(),
+      ]
+
+      const idStr = keys.join(',')
+  
+      const { data: res } = await this.$http.post(
+        `roles/${this.roleId}/rights`,
+        { rids: idStr }
+      )
+      if (res.meta.status !== 200) return this.$message.error('修改权限失败')
+      this.$message.success('分配权限成功')
+
+    this.getRoleList()
+      setRightDialogVisible = false
+    },
   },
 }
 </script>

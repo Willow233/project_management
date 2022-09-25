@@ -15,7 +15,7 @@
             clearable
             @clear="getUserList"
             v-model="queryInfo.query"
-            placeholder="请输入内容"
+            placeholder="请输入用户名"
             class="input-with-select"
           >
             <el-button

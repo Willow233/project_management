@@ -8,7 +8,7 @@ import { Button,
     Message,
     Container,Header,Aside,Main,Row,Col,
     Table,TableColumn,Switch,Tooltip,Pagination,Dialog,Tag,
-    MessageBox
+    MessageBox,Tree
 
 } from 'element-ui'
 
@@ -38,6 +38,7 @@ Vue.use(Tooltip)
 Vue.use(Pagination)
 Vue.use(Dialog)
 Vue.use(Tag)
+Vue.use(Tree)
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
