@@ -22,3 +22,7 @@ html,body,#app{
 .el-pagination{
     margin-top: 20px;
 }
+
+.zk-table{
+    margin-top: 20px;
+}

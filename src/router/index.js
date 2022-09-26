@@ -8,6 +8,7 @@ import Welcome from '@/components/Welcome'
 import Users from '@/views/users/Users'
 import RightList from '@/views/rights/RightList'
 import RoleList from '@/views/rights/RoleList'
+import Catagories from '@/views/goods/Catagories'
 
 Vue.use(VueRouter)
 
@@ -29,7 +30,9 @@ const router = new VueRouter({
         { path: '/welcome', component: Welcome },
         { path: '/users', component: Users },
         { path: '/rightlist', component: RightList },
-        { path: '/rolelist', component: RoleList }
+        { path: '/rolelist', component: RoleList },
+        { path: '/catagories', component: Catagories }
+
       ]
     }
   ]

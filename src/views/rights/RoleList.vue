@@ -33,7 +33,7 @@
                 <el-col :span="5">
                   <el-tag
                   closable
-                        @close="removeRightById(scope.row,item1.id)"
+                  @close="removeRightById(scope.row,item1.id)"
                   >{{ item1.authName }}</el-tag>
                   <i class="el-icon-caret-right"></i>
                 </el-col>
