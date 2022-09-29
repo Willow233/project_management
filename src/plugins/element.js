@@ -8,7 +8,7 @@ import { Button,
     Message,
     Container,Header,Aside,Main,Row,Col,
     Table,TableColumn,Switch,Tooltip,Pagination,Dialog,Tag,
-    MessageBox,Tree,Select,Option,Cascader
+    MessageBox,Tree,Select,Option,Cascader,Avatar
 
 } from 'element-ui'
 
@@ -42,6 +42,7 @@ Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Cascader)
+Vue.use(Avatar)
 
 
 Vue.prototype.$message = Message

@@ -32,7 +32,7 @@
           :default-active="activePath"
         >
           <!-- 首页 -->
-          <el-menu-item index="/home">
+          <el-menu-item class="el-submenu__title" index="/home">
             <template slot="title">
               <i class="iconfont icon-home"></i>
               <span>首页</span>
@@ -92,13 +92,13 @@ export default {
       },
       isCollapse: false,
       // 被激活的地址
-      activePath: '',
+      activePath: '/home',
     }
   },
   created() {
     this.getUsername()
     this.getMenuList()
-    this.activePath = window.sessionStorage.getItem('activePath')
+    // this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
     logout() {

@@ -26,7 +26,6 @@
         </el-form-item>
         <el-form-item>
           <el-button class="btn" type="primary" @click="login">登录</el-button>
-          <el-button class="btn">注册</el-button>
         </el-form-item>
       </el-form>
 </template>
@@ -92,6 +91,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less" scoped>
+.el-button{
+  width: 100%;
+}
 </style>

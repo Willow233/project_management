@@ -260,10 +260,10 @@ export default {
     },
     methods:{
        async getCateList(){
-            // const {data:res} = await this.$http.get('/categories',{params:this.queryInfo})
-            //  if (res.status !== 200) return this.$message.error('获取分类列表信息失败')
-            // this.cateList = res.data.result
-            // this.total = res.data.total
+            const {data:res} = await this.$http.get('/categories',{params:this.queryInfo})
+             if (res.status !== 200) return this.$message.error('获取分类列表信息失败')
+            this.cateList = res.data.result
+            this.total = res.data.total
         },
         handleSizeChange(newSize){
           this.queryInfo.pagesize = newSize

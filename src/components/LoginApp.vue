@@ -13,7 +13,7 @@
         <el-menu-item index="/loginapp/login">
           登录
         </el-menu-item>
-        <el-menu-item index="/loginapp/reguser">
+        <el-menu-item v-if="false" index="/loginapp/reguser">
           注册
         </el-menu-item>
       </el-menu>
