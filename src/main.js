@@ -19,7 +19,7 @@ axios.interceptors.request.use(config => {
 Vue.prototype.$http = axios
 
 // 导入mock
-import '../api/mock.js'
+import '../mock/mock.js'
 
 // 关闭提示
 

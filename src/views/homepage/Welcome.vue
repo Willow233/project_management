@@ -11,11 +11,15 @@
           <el-card shadow="never" style="height: 85px">
             <div class="welcome">
               <el-avatar :size="50" :src="circleUrl"></el-avatar>
-              <span>你好，用户名</span>
+              <div class="text">
+              <span class="username">{{username}}</span>
+              <span class="role-name">超级管理员</span>
+              </div>
+              
             </div>
           </el-card>
         </el-row>
-        <!-- 图标卡片 -->
+        <!-- E-chart卡片 -->
         <el-row :gutter="15">
           <el-col :span="12">
             <el-card class="box-card" style="height: 300px">
@@ -80,14 +84,37 @@
 
 <script>
 import OrderCard from './OrderCard.vue'
+import {getData} from '@/api/data.js'
 export default {
   components:{
     OrderCard
   },
   data() {
     return {
-      
+      username:'',
+      circleUrl:'',
+      tableData:''
     }
+  },
+  created() {
+    this.getUsername()
+    getData().then(res =>{
+      const {code,data} = res.data
+      if(code === 20000) {
+        this.tableData = data.tableData
+      }
+      console.log(res)
+    })
+  },
+  methods: {
+    async getUsername() {
+      const { data: res } = await this.$http.get('/my/userinfo')
+      if (res.status !== 200) return this.$message.error('获取用户信息失败')
+      console.log(res)
+      this.username = res.data.username
+    },
+
+
   },
 }
 </script>
@@ -103,10 +130,25 @@ export default {
 .welcome {
   display: flex;
   align-items: center;
-}
-.el-avatar {
+  .el-avatar {
   margin-right: 15px;
 }
+.text{
+  display: flex;
+  flex-direction: column;
+  .username{
+    font-size: 20px;
+  }
+  .role-name{
+    margin-top:5px;
+    font-size: 12px;
+    color: rgb(158, 158, 158);
+  }
+}
+}
+
+
+
 
 .el-card__body {
   display: flex;

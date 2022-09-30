@@ -32,6 +32,3 @@ html,body,#app{
     overflow-x: hidden;
   }
 
-  .el-cascader-menu__list{
-    height: 200px;
-  }

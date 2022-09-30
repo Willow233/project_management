@@ -38,12 +38,13 @@ const router = new VueRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
+// 路由守卫
+/* router.beforeEach((to, from, next) => {
   if (to.path === '/loginapp' || "/loginapp/login" || "/loginapp/reguser") return next()
   const tokenStr = window.sessionStorage.getItem('token')
   if (!tokenStr) return next('/loginapp')
   next()
 
-})
+}) */
 
 export default router

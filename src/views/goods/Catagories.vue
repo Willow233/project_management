@@ -295,5 +295,11 @@ export default {
 <style lang="less" scoped>
 .el-cascader{
   width: 100%;
+
+  .el-cascader-menu__list{
+    height: 200px;
+  }
 }
+
+
 </style>

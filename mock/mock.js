@@ -2,4 +2,4 @@
 import Mock from 'mockjs'
 import homeApi from './mockServeData/homepage'
 
-Mock.mock('/homepage',homeApi.getStatisticalData)
+Mock.mock('/home/getDate',homeApi.getStatisticalData)
