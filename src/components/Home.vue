@@ -96,9 +96,9 @@ export default {
     }
   },
   created() {
-    this.getUsername()
-    this.getMenuList()
-    // this.activePath = window.sessionStorage.getItem('activePath')
+    this.getUsername(),
+    this.getMenuList(),
+    this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
     logout() {
@@ -194,4 +194,6 @@ export default {
     color: #f3e48f;
   }
 }
+
+
 </style>

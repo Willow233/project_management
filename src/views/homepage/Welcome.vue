@@ -67,14 +67,34 @@
             <OrderCard/>
           </el-card>
         </el-row>
+        <!-- 订单列表 -->
         <el-row>
           <el-card class="box-card" style="height: 310px">
             <div slot="header" class="clearfix">
-              <span>卡片名称</span>
+              <span>订单列表</span>
               <el-button style="float: right; padding: 3px 0" type="text"
                 >操作按钮</el-button
               >
             </div>
+              <el-table
+      :data="tableData"
+      style="width: 100%">
+      <el-table-column
+        prop="date"
+        label="日期"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="姓名"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="address"
+        label="地址">
+      </el-table-column>
+    </el-table>
+            
           </el-card>
         </el-row>
       </el-col>
@@ -83,8 +103,9 @@
 </template>
 
 <script>
-import OrderCard from './OrderCard.vue'
-import {getData} from '@/api/data.js'
+import OrderCard from './components/OrderCard.vue'
+import * as echarts from 'echarts'
+
 export default {
   components:{
     OrderCard
@@ -92,19 +113,13 @@ export default {
   data() {
     return {
       username:'',
-      circleUrl:'',
-      tableData:''
+      circleUrl:'https://avatars.githubusercontent.com/u/106798976?v=4',
+      tableData:[]
     }
   },
   created() {
-    this.getUsername()
-    getData().then(res =>{
-      const {code,data} = res.data
-      if(code === 20000) {
-        this.tableData = data.tableData
-      }
-      console.log(res)
-    })
+    this.getUsername(),
+    this.getHomeData()
   },
   methods: {
     async getUsername() {
@@ -113,6 +128,13 @@ export default {
       console.log(res)
       this.username = res.data.username
     },
+
+    async getHomeData(){
+      const { data: res } = await this.$http.get('/my/getdate')
+      // if (res.meta.status !== 200) return this.$message.error('获取首页数据失败')
+      console.log(res)
+      this.tableData = res.data.tableData
+    }
 
 
   },
@@ -152,6 +174,10 @@ export default {
 
 .el-card__body {
   display: flex;
+}
+
+.el-table{
+    margin-top: 0px;
 }
 
 
